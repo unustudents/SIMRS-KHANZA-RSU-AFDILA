@@ -10,7 +10,15 @@
   dak pernah rela karya kami dibajak tanpa ijin.
  */
 package simrskhanza;
-
+// START -- TAMBAHKAN INI !
+import grafikanalisa.grafiksqlttv;
+import rekammedis.RMRiwayatSOAPIECPPT; // RIWAYAT SOAP PPA & PASIEN TAMBAHKAN INI !
+import rekammedis.RMRiwayatPenunjang; // RIWAYAT RADIOLOGI -- TAMBAHKAN INI !
+import rekammedis.RMRiwayatPengobatan; // RIWAYAT PENGOBATAN -- TAMBAHKAN INI !
+import rekammedis.RMRiwayatOperasi; // RIWAYAT OPERASI -- TAMBAHKAN INI !
+import rekammedis.RMCari5DiagnosaTerakhir; // RIWAYAT DIAGNOSA -- TAMBAHKAN INI !
+import java.awt.Toolkit; // -- TAMBAHKAN INI
+// FINISH -- TAMBAHKAN INI !
 import rekammedis.RMRiwayatPerawatan;
 import surat.SuratKontrol;
 import keuangan.DlgCariPerawatanRanap;
@@ -170,7 +178,11 @@ public final class DlgRawatInap extends javax.swing.JDialog {
             Beban_Jasa_Medik_Paramedis_Tindakan_Ranap="",Utang_Jasa_Medik_Paramedis_Tindakan_Ranap="",Beban_KSO_Tindakan_Ranap="",Utang_KSO_Tindakan_Ranap="",
             Beban_Jasa_Sarana_Tindakan_Ranap="",Utang_Jasa_Sarana_Tindakan_Ranap="",Beban_Jasa_Menejemen_Tindakan_Ranap="",Utang_Jasa_Menejemen_Tindakan_Ranap="",
             HPP_BHP_Tindakan_Ranap="",Persediaan_BHP_Tindakan_Ranap="",kode_poli="",kamar="",jenisbayar="",TANGGALMUNDUR="yes";
-
+    // START -- TAMBAHKAN INI !
+    private RMCari5DiagnosaTerakhir diagnosaterakhir = new RMCari5DiagnosaTerakhir(null, false); // RIWAYAT DIAGNOSA -- TAMBAHKAN INI !
+    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    // FINISH -- TAMBAHKAN INI !
+    
     /** Creates new form DlgRawatInap
      * @param parent
      * @param modal */
@@ -1220,6 +1232,16 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TBerat = new widget.TextBox();
         TNadi = new widget.TextBox();
         jLabel61 = new widget.Label();
+        // START -- TAMBAHKAN INI !
+        Btn5Soap1 = new widget.Button(); // RIWAYAT SOAP PASIEN -- TAMBAHKAN INI !
+        Btn5Soap2 = new widget.Button(); // RIWAYAT SOAP PPA -- TAMBAHKAN INI !
+        BtnHasilRadiologi = new widget.Button(); // RIWAYAT RADIOLOGI -- TAMBAHKAN INI !
+        BtnHasilPengobatan = new widget.Button(); // RIWAYAT OBAT -- TAMBAHKAN INI !
+        BtnHasilPengobatan1 = new widget.Button(); // RIWAYAT OPERASI -- TAMBAHKAN INI !
+        BtnDiagnosa1 = new widget.Button(); // RIWAYAT DIAGNOSA -- TAMBAHKAN INI !
+        BtnInputResume = new widget.Button(); // RESUME -- TAMBAHKAN INI !
+        BtnGrafikTTV = new widget.Button(); // GRAFIK -- TAMBAHKAN INI !
+        // FINISH -- TAMBAHKAN INI !
         internalFrame6 = new widget.InternalFrame();
         Scroll4 = new widget.ScrollPane();
         tbPemeriksaanObstetri = new widget.Table();
@@ -2496,6 +2518,153 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         PanelInput1.add(panelGlass12, java.awt.BorderLayout.CENTER);
 
         internalFrame5.add(PanelInput1, java.awt.BorderLayout.PAGE_START);
+        
+        // RIWAYAT SOAP PASIEN -- START -- TAMBAHKAN INI
+        Btn5Soap1.setForeground(new java.awt.Color(0, 0, 0));
+        Btn5Soap1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/1358372639_kmenuedit.png"))); // NOI18N
+        Btn5Soap1.setMnemonic('4');
+        Btn5Soap1.setText("Riwayat SOAP Pasien");
+        Btn5Soap1.setToolTipText("");
+        Btn5Soap1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        Btn5Soap1.setGlassColor(new java.awt.Color(255, 153, 153));
+        Btn5Soap1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        Btn5Soap1.setName("Btn5Soap1"); // NOI18N
+        Btn5Soap1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn5Soap1ActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(Btn5Soap1);
+        Btn5Soap1.setBounds(910, 10, 160, 30);
+        // RIWAYAT SOAP PASIEN -- FINISH
+
+        // RIWAYAT SOAP PPA -- START -- TAMBAHKAN INI
+        Btn5Soap2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/search_page.png"))); // NOI18N
+        Btn5Soap2.setMnemonic('4');
+        Btn5Soap2.setText("Riwayat SOAP PPA");
+        Btn5Soap2.setToolTipText("");
+        Btn5Soap2.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        Btn5Soap2.setGlassColor(new java.awt.Color(255, 153, 153));
+        Btn5Soap2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        Btn5Soap2.setName("Btn5Soap2"); // NOI18N
+        Btn5Soap2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn5Soap2ActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(Btn5Soap2);
+        Btn5Soap2.setBounds(910, 40, 160, 30);
+        // RIWAYAT SOAP PPA -- FINISH
+
+        // RIWAYAT RADIOLOGI -- START -- TAMBAHKAN INI
+        BtnHasilRadiologi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/TestTubes.png"))); // NOI18N
+        BtnHasilRadiologi.setMnemonic('4');
+        BtnHasilRadiologi.setText("Riwayat Penunjang");
+        BtnHasilRadiologi.setToolTipText("");
+        BtnHasilRadiologi.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        BtnHasilRadiologi.setGlassColor(new java.awt.Color(255, 153, 153));
+        BtnHasilRadiologi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnHasilRadiologi.setName("BtnHasilRadiologi"); // NOI18N
+        BtnHasilRadiologi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHasilRadiologiActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(BtnHasilRadiologi);
+        BtnHasilRadiologi.setBounds(910, 70, 160, 30);
+        //RIWAYAT RADILOGI -- FINISH
+
+        // RIWAYAT OBAT -- START  -- TAMBAHKAN INI
+        BtnHasilPengobatan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Vial-Pills.png"))); // NOI18N
+        BtnHasilPengobatan.setMnemonic('4');
+        BtnHasilPengobatan.setText("Riwayat Pengobatan");
+        BtnHasilPengobatan.setToolTipText("");
+        BtnHasilPengobatan.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        BtnHasilPengobatan.setGlassColor(new java.awt.Color(255, 153, 153));
+        BtnHasilPengobatan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnHasilPengobatan.setName("BtnHasilPengobatan"); // NOI18N
+        BtnHasilPengobatan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHasilPengobatanActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(BtnHasilPengobatan);
+        BtnHasilPengobatan.setBounds(910, 100, 160, 30);
+        // RIWAYAT OBAT --  FINISH
+
+        // RIWAYAT OPERASI -- START -- TAMBAHKAN INI
+        BtnHasilPengobatan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Surgeon SH.png"))); // NOI18N
+        BtnHasilPengobatan1.setMnemonic('4');
+        BtnHasilPengobatan1.setText("Riwayat Operasi");
+        BtnHasilPengobatan1.setToolTipText("");
+        BtnHasilPengobatan1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        BtnHasilPengobatan1.setGlassColor(new java.awt.Color(255, 153, 153));
+        BtnHasilPengobatan1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnHasilPengobatan1.setName("BtnHasilPengobatan1"); // NOI18N
+        BtnHasilPengobatan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHasilPengobatan1ActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(BtnHasilPengobatan1);
+        BtnHasilPengobatan1.setBounds(910, 130, 160, 30);
+        //RIWAYAT OPERASI -- FINISH
+
+        // RIWAYAT DIAGNOSA -- START -- TAMBAHKAN INI
+        BtnDiagnosa1.setForeground(new java.awt.Color(0, 0, 0));
+        BtnDiagnosa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/1358372639_kmenuedit.png"))); // NOI18N
+        BtnDiagnosa1.setMnemonic('4');
+        BtnDiagnosa1.setText("Riwayat Diagnosa");
+        BtnDiagnosa1.setToolTipText("");
+        BtnDiagnosa1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        BtnDiagnosa1.setGlassColor(new java.awt.Color(255, 153, 153));
+        BtnDiagnosa1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnDiagnosa1.setName("BtnDiagnosa1"); // NOI18N
+        BtnDiagnosa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDiagnosa1ActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(BtnDiagnosa1);
+        BtnDiagnosa1.setBounds(910, 160, 160, 30);
+        // RIWAYAT DIAGNOSA -- FINISH
+
+        // RESUME -- START -- TAMBAHKAN INI
+        BtnInputResume.setForeground(new java.awt.Color(0, 0, 0));
+        BtnInputResume.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Edit.png"))); // NOI18N
+        BtnInputResume.setMnemonic('4');
+        BtnInputResume.setText("Resume Pasien");
+        BtnInputResume.setToolTipText("");
+        BtnInputResume.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        BtnInputResume.setGlassColor(new java.awt.Color(255, 153, 153));
+        BtnInputResume.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnInputResume.setName("BtnInputResume"); // NOI18N
+        BtnInputResume.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnInputResumeActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(BtnInputResume);
+        BtnInputResume.setBounds(910, 190, 160, 30);
+        // RESUME -- FINISH
+
+        // GRAFIK -- START -- TAMBAHKAN INI
+        BtnGrafikTTV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Bar Chart.png"))); // NOI18N
+        BtnGrafikTTV.setMnemonic('4');
+        BtnGrafikTTV.setText("Grafik TTV");
+        BtnGrafikTTV.setToolTipText("");
+        BtnGrafikTTV.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        BtnGrafikTTV.setGlassColor(new java.awt.Color(255, 153, 153));
+        BtnGrafikTTV.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnGrafikTTV.setName("BtnGrafikTTV"); // NOI18N
+        BtnGrafikTTV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGrafikTTVActionPerformed(evt);
+            }
+        });
+        panelGlass12.add(BtnGrafikTTV);
+        BtnGrafikTTV.setBounds(910, 220, 160, 30);
+        // GRAFIK -- FINISH
 
         TabRawat.addTab("Pemeriksaan", internalFrame5);
 
@@ -8453,6 +8622,17 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private widget.Button BtnDokumentasiESWL;
     private widget.Button BtnEdit;
     private widget.Button BtnFollowUpDBD;
+    // START -- TAMBAHKAN INI !
+    private widget.Button Btn5Soap1; // RIWAYAT SOAP PASIEN -- TAMBAHKAN INI !
+    private widget.Button Btn5Soap2; // RIWAYAT SOAP PPA -- TAMBAHKAN INI !
+    private widget.Button BtnHasilRadiologi; // RIWAYAT RADIOLOGI --  TAMBAHKAN INI !
+    private widget.Button BtnHasilPengobatan; // RIWAYAT OBAT -- TAMBAHKAN INI !
+    private widget.Button BtnHasilPengobatan1; // RIWAYAT OPERAI -- TAMBAHKAN INI !
+    private widget.Button BtnGrafikTTV; // GRAFIK -- TAMBAHKAN INI !
+    private widget.Button BtnInputResume; // RESUME -- TAMBAHKAN INI !
+    private widget.Button BtnDiagnosa1; // RIWAYAT DIAGNOSA -- TAMBAHKAN INI !
+    private widget.PanelBiasa panelBiasa3; // -- TAMBAHKAN INI !
+    // FINISH -- TAMBAHKAN INI !
     private widget.Button BtnHapus;
     private widget.Button BtnHasilPemeriksaanUSG;
     private widget.Button BtnInformasiObat;
@@ -10908,4 +11088,141 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
             Sequel.AutoComitTrue();                                    
         }
     }
+    // RIWAYAT SOAP PASIEN -- START -- TAMBAHKAN INI
+    private void Btn5Soap1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TPasien.getText().trim().equals("") || TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            TCari.requestFocus();
+        } else if (TPegawai.getText().trim().equals("") || KdPeg.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu petugas/dokter pemberi asuhan...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            soapterakhir.setNoRM(TNoRM.getText(), KdPeg.getText(), "Ranap");
+            soapterakhir.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            soapterakhir.setLocationRelativeTo(internalFrame1);
+            soapterakhir.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }
+    // RIWAYAT SOAP PASIEN -- FINISH 
+
+    // RIWAYAT SOAP PPA -- START -- TAMBAHKAN INI
+    private void Btn5Soap2ActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            RMRiwayatSOAPIECPPT resume = new RMRiwayatSOAPIECPPT(null, true);
+            resume.setNoRm(TNoRM.getText(), TPasien.getText());
+            resume.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+            resume.setLocationRelativeTo(internalFrame1);
+            resume.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }
+    //RIWAYAT SOAP PPA -- FINISH
+
+    // RIWAYAT RADIOLOGI -- START -- TAMBAHKAN INI
+    private void BtnHasilRadiologiActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            RMRiwayatPenunjang resume = new RMRiwayatPenunjang(null, true);
+            resume.setNoRm(TNoRM.getText(), TPasien.getText());
+            resume.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+            resume.setLocationRelativeTo(internalFrame1);
+            resume.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }        // TODO add your handling code here:
+    }
+    // RIWAYAT RADIOLOGI -- FINISH
+
+    // RIWAYAT OBAT -- START -- TAMBAHKAN INI
+    private void BtnHasilPengobatanActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            RMRiwayatPengobatan resume = new RMRiwayatPengobatan(null, true);
+            resume.setNoRm(TNoRM.getText(), TPasien.getText());
+            resume.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+            resume.setLocationRelativeTo(internalFrame1);
+            resume.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }  // TODO add your handling code here:
+    }
+    // RIWAYAT OBAT -- FINISH
+
+    // RIWAYAT OPERASI -- START -- TAMBAHKAN INI
+    private void BtnHasilPengobatan1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            RMRiwayatOperasi resume = new RMRiwayatOperasi(null, true);
+            resume.setNoRm(TNoRM.getText(), TPasien.getText());
+            resume.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+            resume.setLocationRelativeTo(internalFrame1);
+            resume.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        } // TODO add your handling code here:
+    }
+    // RIWAYAT OPERASI -- FINISH
+
+    // RIWAYAT DIAGNOSA -- START -- TAMBAHKAN INI
+    private void BtnDiagnosa1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TPasien.getText().trim().equals("") || TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            TCari.requestFocus();
+        } else if (TPegawai.getText().trim().equals("") || KdPeg.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu petugas/dokter pemberi asuhan...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            diagnosaterakhir.setNoRM(TNoRM.getText(), KdPeg.getText(), "Ralan");
+            diagnosaterakhir.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            diagnosaterakhir.setLocationRelativeTo(internalFrame1);
+            diagnosaterakhir.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }
+    // RIWAYAT DIAGNOSA -- FINISH
+
+    // RESUME -- START -- TAMBAHKAN INI
+    private void BtnInputResumeActionPerformed(java.awt.event.ActionEvent evt) {
+        if (TNoRw.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            RMDataResumePasienRanap resume = new RMDataResumePasienRanap(null, false);
+            resume.isCek();
+            resume.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            resume.setLocationRelativeTo(internalFrame1);
+            resume.setNoRm(TNoRw.getText(), DTPCari2.getDate());
+            resume.tampil();
+            resume.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }        // TODO add your handling code here:
+    }
+    // RESUME -- FINISH
+
+    // GRAFIK -- START -- TAMBAHKAN INI
+    private void BtnGrafikTTVActionPerformed(java.awt.event.ActionEvent evt) {
+        grafiksqlttv kas = new grafiksqlttv("Grafik TTV Pasien " + TPasien.getText(),
+                "select DATE_FORMAT(tgl_perawatan , '%d/%m/%Y') as tgl,jam_rawat,replace(suhu_tubuh,',','.') as suhu_tubuh,nadi,respirasi,spo2 from pemeriksaan_ranap where no_rawat='" + TNoRw.getText() + "' and suhu_tubuh <>''", "Suhu", "Nadi", "Respirasi", "Spo2");
+        kas.setModal(true);
+        kas.setAlwaysOnTop(true);
+        kas.setLocationRelativeTo(panelBiasa3);
+        kas.setSize(screen.width, 600);
+        kas.setLocation(0, 100);
+        kas.setVisible(true);
+    }
+    // GRAFIK -- FINISH
 }

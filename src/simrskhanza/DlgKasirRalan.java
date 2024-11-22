@@ -11,6 +11,7 @@
  */
 
 package simrskhanza;
+import rekammedis.RMGenerateKlaim; // GENERATE KLAIM -- TAMBAHKAN INI !
 import bridging.BPJSCekDataIndukKecelakaan;
 import bridging.BPJSCekSuplesiJasaRaharja;
 import rekammedis.RMRiwayatPerawatan;
@@ -275,7 +276,7 @@ public final class DlgKasirRalan extends javax.swing.JDialog {
             "Kode Dokter","Dokter Dituju","No.RM","Pasien",
             "Poliklinik","Penanggung Jawab","Alamat P.J.","Hubungan P.J.",
             "Biaya Reg","Jenis Bayar","Status","No.Rawat","Tanggal",
-            "Jam","No.Reg","Status Bayar","Stts Poli","Kd PJ","Kd Poli","No.Telp Pasien"}){
+            "Jam","No.Reg","Status Bayar","Stts Poli","Kd PJ","Kd Poli","No.Telp Pasien","SEP BPJS","No.KTP"}){// TAMBAHKAN INI -- ,"SEP BPJS","No.KTP"
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
         tbKasirRalan.setModel(tabModekasir);
@@ -283,7 +284,8 @@ public final class DlgKasirRalan extends javax.swing.JDialog {
         tbKasirRalan.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbKasirRalan.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 20; i++) {
+        // LOGIKA TABEL
+        for (i = 0; i < 22; i++) { // TAMBAHKAN INI -- UBAH JADI 22
             TableColumn column = tbKasirRalan.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(70);
@@ -327,6 +329,12 @@ public final class DlgKasirRalan extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }else if(i==19){
                 column.setPreferredWidth(95);
+            // START -- TAMBAHKAN INI !
+            } else if (i == 20) {
+                column.setPreferredWidth(130);
+            } else if (i == 21) {
+                column.setPreferredWidth(130);
+            // FINISH -- TAMBAHKAN INI !
             }
         }
         try {
@@ -13953,6 +13961,28 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
         }
     } 
     
+    // GENERATE KLAIM -- START -- TAMBAHKAN INI !
+    private void ppGenerateBerkasKlaimBtnPrintActionPerformed(java.awt.event.ActionEvent evt) {
+        if (tabModekasir.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            //TNoReg.requestFocus();
+        } else if (TNoRw.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            tbKasirRalan.requestFocus();
+        } else {
+            if (tbKasirRalan.getSelectedRow() != -1) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                RMGenerateKlaim form = new RMGenerateKlaim(null, false);
+                form.setNoRawat(TNoRw.getText());
+                form.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                form.setLocationRelativeTo(internalFrame1);
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            }
+        }
+    }
+    // GENERATE KLAIM -- FINISH -- TAMBAHKAN INI !
+    
     private void MnSudahTerbitSEPActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         terbitsep="and reg_periksa.kd_pj in (select password_asuransi.kd_pj from password_asuransi) and reg_periksa.no_rawat in (select bridging_sep.no_rawat from bridging_sep)";
         TabRawatMouseClicked(null);
@@ -15016,8 +15046,12 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
                                   MnHasilEndoskopiFaringLaring,MnHasilEndoskopiHidung,MnHasilEndoskopiTelinga,MnPenilaianPasienImunitasRendah,MnCatatanKeseimbanganCairan,MnCatatanObservasiCHBP,MnCatatanObservasiInduksiPersalinan,
                                   MnPermintaanKonsultasiMedik,MnDataOperasi,MnDataKonsultasiMedik,MnSkriningMerokokUsiaSekolahRemaja,MnSkriningKekerasanPadaWanita,MnSkriningObesitas,MnSkriningRisikoKankerPayudara,MnSkriningRisikoKankerParu,
                                   MnSkriningKesehatanGigiMulutRemaja,MnSkriningTBC,MnCatatanAnastesiSedasi,MnSkriningPUMA,MnSkriningAdiksiNikotin,MnSkriningThalassemia,MnSkriningInstrumenSDQ,MnSkriningInstrumenSRQ,MnChecklistPemberianFibrinolitik,
-                                  MnSkriningKankerKolorektal;
+                                  MnSkriningKankerKolorektal,ppGenerateBerkasKlaim;// TAMBAHKAN INI ! -- ppGenerateBerkasKlaim,
     private javax.swing.JMenu MnHasilUSG,MnHasilEndoskopi,MnRMSkrining;
+    // SEP & KTP -- START TAMBAHKAN INI
+    private widget.Label lblSEP, lblKTP;
+    private widget.TextBox TSEP, TNoKTP;
+    // SEP & KTP -- FINISH
     
     private void tampilkasir() {     
         Valid.tabelKosong(tabModekasir);
@@ -15026,9 +15060,9 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
             pskasir=koneksi.prepareStatement("select reg_periksa.no_reg,reg_periksa.no_rawat,reg_periksa.tgl_registrasi,reg_periksa.jam_reg,"+
                 "reg_periksa.kd_dokter,dokter.nm_dokter,reg_periksa.no_rkm_medis,pasien.nm_pasien,poliklinik.nm_poli,"+
                 "reg_periksa.p_jawab,reg_periksa.almt_pj,reg_periksa.hubunganpj,reg_periksa.biaya_reg,reg_periksa.stts,penjab.png_jawab,concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur, "+
-                "reg_periksa.status_bayar,reg_periksa.status_poli,reg_periksa.kd_pj,reg_periksa.kd_poli,pasien.no_tlp "+
+                "reg_periksa.status_bayar,reg_periksa.status_poli,reg_periksa.kd_pj,reg_periksa.kd_poli,pasien.no_tlp,DATE_FORMAT(pasien.tgl_lahir, '%d-%m-%Y') as tgl_lahir,pasien.no_peserta,pasien.no_ktp,IF(bridging_sep.no_sep IS NULL,'-',bridging_sep.no_sep) as no_sep "+  // TAMBAHKAN INI -- ,DATE_FORMAT(pasien.tgl_lahir, '%d-%m-%Y') as tgl_lahir,pasien.no_peserta,pasien.no_ktp,IF(bridging_sep.no_sep IS NULL,'-',bridging_sep.no_sep) as no_sep
                 "from reg_periksa inner join dokter on reg_periksa.kd_dokter=dokter.kd_dokter inner join pasien on reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                "inner join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli inner join penjab on reg_periksa.kd_pj=penjab.kd_pj where  "+
+                "inner join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli inner join penjab on reg_periksa.kd_pj=penjab.kd_pj left join bridging_sep on reg_periksa.no_rawat=bridging_sep.no_rawat where  "+  // TAMBAHKAN INI -- left join bridging_sep on reg_periksa.no_rawat=bridging_sep.no_rawat 
                 "reg_periksa.tgl_registrasi between ? and ? and reg_periksa.status_lanjut='Ralan' "+tampildiagnosa+
                 (semua?"":"and reg_periksa.kd_pj like ? and poliklinik.nm_poli like ? and dokter.nm_dokter like ? and reg_periksa.stts like ? and reg_periksa.status_bayar like ? and "+
                 "(reg_periksa.no_reg like ? or reg_periksa.no_rawat like ? or reg_periksa.tgl_registrasi like ? or reg_periksa.kd_dokter like ? or dokter.nm_dokter like ? or reg_periksa.no_rkm_medis like ? or pasien.nm_pasien like ? or poliklinik.nm_poli like ? or "+
@@ -15061,11 +15095,11 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
                 rskasir=pskasir.executeQuery();
                 while(rskasir.next()){
                     tabModekasir.addRow(new String[] {
-                        rskasir.getString(5),rskasir.getString(6),rskasir.getString(7),rskasir.getString(8)+" ("+rskasir.getString("umur")+")",
+                        rskasir.getString(5),rskasir.getString(6),rskasir.getString(7),rskasir.getString(8)+","+rskasir.getString("tgl_lahir")+",("+rskasir.getString("umur")+")",// TAMBAHKAN INI -- " + rskasir.getString("tgl_lahir") + ",
                         rskasir.getString(9),rskasir.getString(10),rskasir.getString(11),rskasir.getString(12),Valid.SetAngka(rskasir.getDouble(13)),
                         rskasir.getString("png_jawab"),rskasir.getString(14),rskasir.getString("no_rawat"),rskasir.getString("tgl_registrasi"),
                         rskasir.getString("jam_reg"),rskasir.getString(1),rskasir.getString("status_bayar"),rskasir.getString("status_poli"),
-                        rskasir.getString("kd_pj"),rskasir.getString("kd_poli"),rskasir.getString("no_tlp")
+                        rskasir.getString("kd_pj"),rskasir.getString("kd_poli"),rskasir.getString("no_tlp"),rskasir.getString("no_sep"),rskasir.getString("no_ktp") // TAMBAHKAN INI -- rskasir.getString("no_sep"), rskasir.getString("no_ktp")
                     });
                 }                
             } catch(Exception e){
@@ -15091,10 +15125,10 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
             pskasir=koneksi.prepareStatement("select reg_periksa.no_rawat,reg_periksa.tgl_registrasi,reg_periksa.jam_reg,"+
                 "rujukan_internal_poli.kd_dokter,dokter.nm_dokter,reg_periksa.no_rkm_medis,pasien.nm_pasien,poliklinik.nm_poli,"+
                 "reg_periksa.p_jawab,reg_periksa.almt_pj,reg_periksa.hubunganpj,reg_periksa.stts,penjab.png_jawab,rujukan_internal_poli.kd_poli,"+
-                "concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,reg_periksa.kd_pj,pasien.no_tlp "+
+                "concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,reg_periksa.kd_pj,pasien.no_tlp,DATE_FORMAT(pasien.tgl_lahir, '%d-%m-%Y') as tgl_lahir,pasien.no_peserta,pasien.no_ktp,IF(bridging_sep.no_sep IS NULL,'-',bridging_sep.no_sep) as no_sep "+ // TAMBAHKAN INI -- ,DATE_FORMAT(pasien.tgl_lahir, '%d-%m-%Y') as tgl_lahir,pasien.no_peserta,pasien.no_ktp,IF(bridging_sep.no_sep IS NULL,'-',bridging_sep.no_sep) as no_sep
                 "from reg_periksa inner join rujukan_internal_poli on rujukan_internal_poli.no_rawat=reg_periksa.no_rawat "+
                 "inner join dokter on rujukan_internal_poli.kd_dokter=dokter.kd_dokter inner join pasien on reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                "inner join poliklinik on rujukan_internal_poli.kd_poli=poliklinik.kd_poli inner join penjab on reg_periksa.kd_pj=penjab.kd_pj "+
+                "inner join poliklinik on rujukan_internal_poli.kd_poli=poliklinik.kd_poli inner join penjab on reg_periksa.kd_pj=penjab.kd_pj left join bridging_sep on reg_periksa.no_rawat=bridging_sep.no_rawat "+  // TAMBAHKAN INI -- left join bridging_sep on reg_periksa.no_rawat=bridging_sep.no_rawat
                 "where reg_periksa.status_lanjut='Ralan' and reg_periksa.tgl_registrasi between ? and ? "+
                 (semua?"":"and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and reg_periksa.stts like ? and "+
                 "(reg_periksa.no_reg like ? or reg_periksa.no_rawat like ? or reg_periksa.tgl_registrasi like ? or rujukan_internal_poli.kd_dokter like ? "+
@@ -15125,10 +15159,10 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
                 while(rskasir.next()){
                     tabModekasir2.addRow(new String[] {
                         rskasir.getString("kd_dokter"),rskasir.getString("nm_dokter"),
-                        rskasir.getString("no_rkm_medis"),rskasir.getString("nm_pasien")+" ("+rskasir.getString("umur")+")",
+                        rskasir.getString("no_rkm_medis"),rskasir.getString("nm_pasien")+","+rskasir.getString("tgl_lahir")+", ("+rskasir.getString("umur")+")", // TAMBAHKAN INI -- " + rskasir.getString("tgl_lahir") + ",
                         rskasir.getString("nm_poli"),rskasir.getString("p_jawab"),rskasir.getString("almt_pj"),rskasir.getString("hubunganpj"),
                         rskasir.getString("png_jawab"),rskasir.getString("stts"),rskasir.getString("no_rawat"),rskasir.getString("tgl_registrasi"),
-                        rskasir.getString("jam_reg"),rskasir.getString("kd_poli"),rskasir.getString("kd_pj"),rskasir.getString("no_tlp")
+                        rskasir.getString("jam_reg"),rskasir.getString("kd_poli"),rskasir.getString("kd_pj"),rskasir.getString("no_tlp"),rskasir.getString("no_sep"),rskasir.getString("no_ktp") // TAMBAHKAN INI -- rskasir.getString("no_sep"), rskasir.getString("no_ktp")
                     });
                 }                
             } catch(Exception e){
@@ -15157,6 +15191,15 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
             TNoReg.setText(tbKasirRalan.getValueAt(tbKasirRalan.getSelectedRow(),14).toString());
             TNoRMCari.setText(tbKasirRalan.getValueAt(tbKasirRalan.getSelectedRow(),2).toString());
             TPasienCari.setText(tbKasirRalan.getValueAt(tbKasirRalan.getSelectedRow(),3).toString());
+            // SEP & KTP -- START -- TAMBAHKAN INI
+            /*
+                tbKamIn.getSelectedRow(), 22
+                angka 22 adalah urutan dari tabel yang ada di LOGIKA TABEL
+                cari komentar yang bernama LOGIKA TABEL untuk mencarinya
+             */
+            TSEP.setText(tbKasirRalan.getValueAt(tbKasirRalan.getSelectedRow(), 20).toString());
+            TNoKTP.setText(tbKasirRalan.getValueAt(tbKasirRalan.getSelectedRow(), 21).toString());
+            // SEP & KTP -- FINISH
         }
     }
 
@@ -16011,6 +16054,20 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
         MnHasilPemeriksaanEKG.setPreferredSize(new java.awt.Dimension(200, 26));
         MnHasilPemeriksaanEKG.addActionListener(this::MnHasilPemeriksaanEKGActionPerformed);
         
+        // GENERATE KLAIM -- START -- TAMBAHKAN INI !
+        ppGenerateBerkasKlaim = new javax.swing.JMenuItem();
+        ppGenerateBerkasKlaim.setBackground(new java.awt.Color(255, 255, 254));
+        ppGenerateBerkasKlaim.setFont(new java.awt.Font("Tahoma", 0, 11));
+        ppGenerateBerkasKlaim.setForeground(new java.awt.Color(50, 50, 50));
+        ppGenerateBerkasKlaim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png")));
+        ppGenerateBerkasKlaim.setText("Generate Berkas Klaim");
+        ppGenerateBerkasKlaim.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppGenerateBerkasKlaim.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppGenerateBerkasKlaim.setName("ppGenerateBerkasKlaim");
+        ppGenerateBerkasKlaim.setPreferredSize(new java.awt.Dimension(200, 26));
+        ppGenerateBerkasKlaim.addActionListener(this::ppGenerateBerkasKlaimBtnPrintActionPerformed);
+        // GENERATE KLAIM -- FINISH -- TAMBAHKAN INI !
+        
         MnPenatalaksanaanTerapiOkupasi = new javax.swing.JMenuItem();
         MnPenatalaksanaanTerapiOkupasi.setBackground(new java.awt.Color(255, 255, 254));
         MnPenatalaksanaanTerapiOkupasi.setFont(new java.awt.Font("Tahoma", 0, 11)); 
@@ -16368,6 +16425,7 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
         MnRMSkrining.setName("MnRMSkrining"); 
         MnRMSkrining.setPreferredSize(new java.awt.Dimension(200, 26));
         
+        jPopupMenu1.add(ppGenerateBerkasKlaim); // GENERATE KLAIM -- TAMBAHKAN INI !
         MnRMOperasi.add(MnPenilaianPreInduksi);
         MnRMOperasi.add(MnChecklistPreOperasi);
         MnRMOperasi.add(MnSignInSebelumAnestesi);
@@ -16499,5 +16557,36 @@ private void MnDataPemberianObatActionPerformed(java.awt.event.ActionEvent evt) 
         MnDataRM.add(ppResume);
         MnDataRM.add(ppRiwayat);
         MnDataRM.add(ppDeteksiDIniCorona);
+        // SEP & KTP - START -- TAMBAHKAN INI
+        /*
+            INI DI TARUH DI ATAS DI SEBELAH KANAN STATUS BAYAR (Stts.Bayar)
+         */
+        lblSEP = new widget.Label();
+        lblKTP = new widget.Label();
+        TSEP = new widget.TextBox();
+        TNoKTP = new widget.TextBox();
+
+        lblSEP.setText("SEP :");
+        lblSEP.setName("lblSEP"); // NOI18N
+        lblSEP.setPreferredSize(new java.awt.Dimension(60, 23));
+        panelGlass9.add(lblSEP);
+
+        TSEP.setEditable(false);
+        TSEP.setHighlighter(null);
+        TSEP.setName("TSEP"); // NOI18N
+        TSEP.setPreferredSize(new java.awt.Dimension(150, 23));
+        panelGlass9.add(TSEP);
+
+        lblKTP.setText("No KTP :");
+        lblKTP.setName("lblKTP"); // NOI18N
+        lblKTP.setPreferredSize(new java.awt.Dimension(60, 23));
+        panelGlass9.add(lblKTP);
+
+        TNoKTP.setEditable(false);
+        TNoKTP.setHighlighter(null);
+        TNoKTP.setName("TNoKTP"); // NOI18N
+        TNoKTP.setPreferredSize(new java.awt.Dimension(150, 23));
+        panelGlass9.add(TNoKTP);
+        // SEP & KTP - FINISH
     }
 }
