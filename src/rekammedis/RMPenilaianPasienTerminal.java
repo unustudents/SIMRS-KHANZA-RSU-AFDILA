@@ -2,7 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+// TAMBAHKAN INI
+// "Tidak dapat dikaji" pada bagian Tahap Menjelang Ajal. Ditambahkan di Design, karena di Source tidak dapat di tambahkan
 
 package rekammedis;
 
@@ -502,7 +503,7 @@ public final class RMPenilaianPasienTerminal extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-04-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-11-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -516,7 +517,7 @@ public final class RMPenilaianPasienTerminal extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-04-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-11-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -637,7 +638,7 @@ public final class RMPenilaianPasienTerminal extends javax.swing.JDialog {
         TPasien.setBounds(336, 10, 285, 23);
 
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-04-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-11-2024" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -1007,8 +1008,13 @@ public final class RMPenilaianPasienTerminal extends javax.swing.JDialog {
         FormInput.add(jLabel43);
         jLabel43.setBounds(2, 200, 130, 23);
 
-        MenjelangAjal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Menolak", "Marah", "Menawar", "Depresi", "Menerima" }));
+        MenjelangAjal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Menolak", "Marah", "Menawar", "Depresi", "Menerima", "Tidak dapat dikaji" }));
         MenjelangAjal.setName("MenjelangAjal"); // NOI18N
+        MenjelangAjal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenjelangAjalActionPerformed(evt);
+            }
+        });
         MenjelangAjal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 MenjelangAjalKeyPressed(evt);
@@ -1519,6 +1525,10 @@ public final class RMPenilaianPasienTerminal extends javax.swing.JDialog {
     private void KlinisMenjelangKematianKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KlinisMenjelangKematianKeyPressed
         Valid.pindah(evt,MenjelangAjal,Diagnosa);
     }//GEN-LAST:event_KlinisMenjelangKematianKeyPressed
+
+    private void MenjelangAjalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenjelangAjalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenjelangAjalActionPerformed
 
     /**
     * @param args the command line arguments

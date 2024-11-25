@@ -2987,6 +2987,35 @@ public final class RMDataResumePasienRanap extends javax.swing.JDialog {
                     NmRuang.setText(rs.getString("nm_bangsal"));
                     KodeDokterPengirim.setText(rs.getString("kd_dokter"));
                     NamaDokterPengirim.setText(rs.getString("nm_dokter"));
+                    // START -- TAMBAHKAN INI !
+                    //ini modif sendiri
+                    Sequel.cariIsi("select reg_periksa.no_rkm_medis from reg_periksa where reg_periksa.no_rawat='" + TNoRw.getText() + "' ", TNoRM);
+                    if (Sequel.cariInteger("select count(no_rawat) from penilaian_medis_ranap where no_rawat='" + TNoRw.getText() + "' ") > 0) {
+                        KeluhanUtama.setText(Sequel.cariIsi("select keluhan_utama from penilaian_medis_ranap where no_rawat=?", TNoRw.getText()));
+                        PemeriksaanFisik.setText(Sequel.cariIsi("select rps from penilaian_medis_ranap where no_rawat=?", TNoRw.getText()));
+                        DiagnosaUtama.setText(Sequel.cariIsi("select diagnosis from penilaian_medis_ranap where no_rawat=?", TNoRw.getText()));
+                        JalannyaPenyakit.setText("-");
+                        KodeDiagnosaUtama.setText("-");
+
+                    } else if (Sequel.cariInteger("select count(no_rawat) from penilaian_medis_ranap_kandungan where no_rawat='" + TNoRw.getText() + "' ") > 0) {
+                        KeluhanUtama.setText(Sequel.cariIsi("select keluhan_utama from penilaian_medis_ranap_kandungan where no_rawat=?", TNoRw.getText()));
+                        PemeriksaanFisik.setText(Sequel.cariIsi("select rps from penilaian_medis_ranap_kandungan where no_rawat=?", TNoRw.getText()));
+                        DiagnosaUtama.setText(Sequel.cariIsi("select diagnosis from penilaian_medis_ranap_kandungan where no_rawat=?", TNoRw.getText()));
+                        JalannyaPenyakit.setText("-");
+                        KodeDiagnosaUtama.setText("-");
+                    } else if (Sequel.cariInteger("select count(no_rawat) from pemeriksaan_ranap where no_rawat='" + TNoRw.getText() + "' ") > 0) {
+                        KeluhanUtama.setText(Sequel.cariIsi("select keluhan from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+                        DiagnosaUtama.setText(Sequel.cariIsi("select penilaian from pemeriksaan_ranap inner join dokter ON pemeriksaan_ranap.nip = dokter.kd_dokter where no_rawat=?order by tgl_perawatan desc", TNoRw.getText()));
+                        PemeriksaanFisik.setText(Sequel.cariIsi("select pemeriksaan from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+                        // PEMERIKSAAN PENUNJANG LAB TERPENTING -- TAMBAHKAN INI !
+                        // HasilLaborat.setText(Sequel.cariIsi("select keluhan from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+                         HasilLaborat.setText(Sequel.cariIsi("select hasil_radiologi.tgl_periksa,hasil_radiologi.jam,hasil_radiologi.hasil from hasil_radiologi "
+                                 + "where hasil_radiologi.no_rawat=? and (hasil_radiologi.tgl_periksa like ? or hasil_radiologi.hasil like ?) "
+                                 + "order by hasil_radiologi.tgl_periksa,hasil_radiologi.jam"));
+                        JalannyaPenyakit.setText("-");
+                        KodeDiagnosaUtama.setText("-");
+                    }
+                    // FINISH -- TAMBAHKAN INI !
                 }
             } catch (Exception e) {
                 System.out.println("Notif : "+e);

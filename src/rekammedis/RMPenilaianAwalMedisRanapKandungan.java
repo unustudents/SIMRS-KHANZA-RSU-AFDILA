@@ -2761,6 +2761,22 @@ public final class RMPenilaianAwalMedisRanapKandungan extends javax.swing.JDialo
         TglAsuhan.setDate(new Date());
         TabRawat.setSelectedIndex(0);
         Anamnesis.requestFocus();
+        // START -- TAMBAHKAN INI !
+        //modif soap masuk ke penilaian awal medis kandungan
+        if (Sequel.cariInteger("select count(no_rawat) from pemeriksaan_ranap where no_rawat='" + TNoRw.getText() + "' ") > 0) {
+            KeluhanUtama.setText(Sequel.cariIsi("select keluhan from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            // Penunjang.setText(Sequel.cariIsi("select rad from pemeriksaan_ranap where no_rawat=?",TNoRw.getText()));  
+            Laborat.setText(Sequel.cariIsi("select lab from penilaian_medis_ralan_tht where no_rawat=?", TNoRw.getText()));
+            Tatalaksana.setText(Sequel.cariIsi("select rtl from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            Suhu.setText(Sequel.cariIsi("select suhu_tubuh from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            TD.setText(Sequel.cariIsi("select tensi from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            BB.setText(Sequel.cariIsi("select berat from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            TB.setText(Sequel.cariIsi("select tinggi from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            Nadi.setText(Sequel.cariIsi("select nadi from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            RR.setText(Sequel.cariIsi("select respirasi from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+            GCS.setText(Sequel.cariIsi("select gcs from pemeriksaan_ranap where no_rawat=?", TNoRw.getText()));
+        }
+        // FINISH -- TAMBAHKAN INI !
     } 
 
     private void getData() {
