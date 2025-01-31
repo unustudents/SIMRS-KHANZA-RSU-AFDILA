@@ -20,9 +20,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:home/admin-server/SIMRS-Khanza/src/rekammedis/RMPenilaianAwalMedisRanapNeonatus.java</file>
-            <file>file:home/admin-server/SIMRS-Khanza/src/simrskhanza/DlgIKBBayi.java</file>
-            <file>file:home/admin-server/SIMRS-Khanza/src/rekammedis/RMPenilaianAwalMedisRalanMata.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/rekammedis/RMPenilaianAwalMedisRanapNeonatus.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/simrskhanza/DlgIKBBayi.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/rekammedis/RMPenilaianAwalMedisRalanMata.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/rekammedis/RMHasilPemeriksaanEKG.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/inventory/DlgPengeluaranApotek.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/rekammedis/RMDataCatatanObservasiCHBP.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/inventory/DlgCariPermintaan.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/rekammedis/RMRiwayatPerawatan.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/fungsi/akses.java</file>
+            <file>file:home/admin-server/data project/SIMRS-Khanza/src/rekammedis/RMPenilaianDerajatDehidrasi.java</file>
         </group>
     </open-files>
 </project-private>
